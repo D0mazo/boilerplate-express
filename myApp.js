@@ -3,6 +3,15 @@ require('dotenv').config();
 let path = require('path');
 let app = express();
 
+app.get('/now', function (req, res, next) {
+  // Middleware: attach current time to req.time
+  req.time = new Date().toString();
+  next(); // Pass control to the next handler
+}, function (req, res) {
+  // Final handler: send JSON response
+  res.json({ time: req.time });
+});
+
 // Root-level logger middleware MUST come first
 app.use(function (req, res, next) {
   console.log(req.method + " " + req.path + " - " + req.ip);
@@ -42,4 +51,4 @@ module.exports = app;
 
 
 
- module.exports = app;
+
