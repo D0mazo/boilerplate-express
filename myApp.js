@@ -2,6 +2,19 @@ let express = require('express');
 require('dotenv').config();
 let path = require('path');
 let app = express();
+let bodyParser = require('body-parser');  // ✅ require body-parser
+
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.route("/name")
+  .get(function (req, res) {
+    const { first, last } = req.query;   // From query string
+    res.json({ name: `${first} ${last}` });
+  })
+  .post(function (req, res) {
+    const { first, last } = req.body;    // From form body (parsed by body-parser)
+    res.json({ name: `${first} ${last}` });
+  });
 
 app.get("/name", function (req, res) {
     const first = req.query.first;
