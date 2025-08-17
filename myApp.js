@@ -3,6 +3,17 @@ require('dotenv').config();
 let path = require('path');
 let app = express();
 
+app.get("/name", function (req, res) {
+    const first = req.query.first;
+    const last = req.query.last;
+   res.json({ name: `${first} ${last}` });
+});
+
+app.get("/:word/echo", function (req, res) {
+  const word = req.params.word;   // Capture the dynamic word from the URL
+  res.json({ echo: word });       // Respond with JSON
+});
+
 app.get('/now', function (req, res, next) {
   // Middleware: attach current time to req.time
   req.time = new Date().toString();
